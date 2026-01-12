@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- AR 엔진 -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    body { margin:0; background:#000; }
+    .guide {
+      position:fixed; bottom:10px; left:10px; right:10px;
+      background:rgba(0,0,0,0.6); color:#fff;
+      padding:10px; border-radius:10px;
+      font-size:14px;
+    }
+  </style>
+</head>
+
+<body>
+<a-scene
+  mindar-image="imageTargetSrc: targets.mind;"
+  vr-mode-ui="enabled:false"
+  device-orientation-permission-ui="enabled:true">
+
+  <a-assets>
+    <video id="video" src="video.mp4" loop playsinline></video>
+  </a-assets>
+
+  <a-camera position="0 0 0"></a-camera>
+
+  <!-- 상품 인식 시 -->
+  <a-entity mindar-image-target="targetIndex: 0">
+    <a-video src="#video" width="1" height="0.56"></a-video>
+  </a-entity>
+
+</a-scene>
+
+<div class="guide">
+  📷 카메라 허용 → 상품을 비춰보세요
+</div>
+
+<script>
+  document.body.addEventListener('click', () => {
+    const v = document.querySelector('#video');
+    if (v) v.play();
+  }, { once:true });
+</script>
+</body>
+</html>
